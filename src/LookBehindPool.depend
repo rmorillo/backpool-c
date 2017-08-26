@@ -1,0 +1,131 @@
+# depslib dependency file v1.0
+1503767429 source:c:\workspace\codeblocks\lookbehindpool\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<math.h>
+	"intpool.h"
+	"linkedlist.h"
+
+1503780513 c:\workspace\codeblocks\lookbehindpool\lookbehindpool.h
+	<stdbool.h>
+	"linkedlist.h"
+
+1503780544 source:c:\workspace\codeblocks\lookbehindpool\lookbehindpool.c
+	<stdlib.h>
+	<stdio.h>
+	"lookbehindpool.h"
+
+1503684028 c:\workspace\codeblocks\lookbehindpool\poolitemtype.h
+
+1503755156 c:\workspace\codeblocks\lookbehindpool\floatpool.h
+	"lookbehindpool.h"
+	"poolcommon.h"
+
+1503756064 source:c:\workspace\codeblocks\lookbehindpool\floatpool.c
+	"floatpool.h"
+	<stdlib.h>
+	<math.h>
+	"poolcommon.c"
+
+1503768855 source:c:\workspace\codeblocks\lookbehindpool\cutest.c
+	<assert.h>
+	<setjmp.h>
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	<math.h>
+	"CuTest.h"
+
+1503768996 c:\workspace\codeblocks\lookbehindpool\cutest.h
+	<setjmp.h>
+	<stdarg.h>
+
+1503750282 c:\workspace\codeblocks\lookbehindpool\poolcommon.c
+
+1503727557 c:\workspace\codeblocks\lookbehindpool\linkedlist.h
+
+1503728648 source:c:\workspace\codeblocks\lookbehindpool\linkedlist.c
+	"linkedlist.h"
+	<stdlib.h>
+
+1503753452 c:\workspace\codeblocks\lookbehindpool\poolcommon.h
+
+1503755113 c:\workspace\codeblocks\lookbehindpool\intpool.h
+	"lookbehindpool.h"
+	"poolcommon.h"
+
+1503764970 source:c:\workspace\codeblocks\lookbehindpool\intpool.c
+	<stdlib.h>
+	<math.h>
+	<limits.h>
+	"intpool.h"
+	"poolcommon.c"
+
+1503767244 source:c:\workspace\codeblocks\lookbehindpool\alltests.c
+	<stdio.h>
+	"CuTest.h"
+
+1503772806 source:c:\workspace\codeblocks\lookbehindpool\cutesttest.c
+	<assert.h>
+	<setjmp.h>
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	"intpool.h"
+	"linkedlist.h"
+	"CuTest.h"
+	"CuTestHelper.c"
+
+1503769096 c:\workspace\codeblocks\lookbehindpool\cutesthelper.c
+
+1503781277 source:c:\workspace\codeblocks\lookbehindpool\lookbehindpool_test.c
+	<assert.h>
+	<setjmp.h>
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	<limits.h>
+	"lookbehindpool.h"
+	"linkedlist.h"
+	"CuTest.h"
+
+1503767244 source:c:\workspace\codeblocks\lookbehindpool\src\alltests.c
+	<stdio.h>
+	"CuTest.h"
+
+1503768996 c:\workspace\codeblocks\lookbehindpool\src\cutest.h
+	<setjmp.h>
+	<stdarg.h>
+
+1503768855 source:c:\workspace\codeblocks\lookbehindpool\src\cutest.c
+	<assert.h>
+	<setjmp.h>
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	<math.h>
+	"CuTest.h"
+
+1503780544 source:c:\workspace\codeblocks\lookbehindpool\src\lookbehindpool.c
+	<stdlib.h>
+	<stdio.h>
+	"lookbehindpool.h"
+
+1503780513 c:\workspace\codeblocks\lookbehindpool\src\lookbehindpool.h
+	<stdbool.h>
+	"linkedlist.h"
+
+1503727557 c:\workspace\codeblocks\lookbehindpool\src\linkedlist.h
+
+1503781877 source:c:\workspace\codeblocks\lookbehindpool\src\lookbehindpool_test.c
+	<assert.h>
+	<setjmp.h>
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	<limits.h>
+	"lookbehindpool.h"
+	"linkedlist.h"
+	"CuTest.h"
+
