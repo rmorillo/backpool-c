@@ -1,14 +1,16 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "lookbehindpool.h"
+#include "backpool.h"
+#include "objectpool.h"
 
-Pool* Pool_new(int capacity, POOL_ITEM_TYPE* (*initItem)(void))
+BackPool* ObjectPool_new(int capacity, POOL_ITEM_TYPE* (*initItem)(void))
 {
-    Pool* pool = malloc(sizeof(struct Pool));
+    BackPool* pool = malloc(sizeof(struct BackPool));
 
     POOL_ITEM_TYPE** poolItems= malloc(capacity * sizeof(struct POOL_ITEM_TYPE *));
 
-    for (int i = 0; i < capacity; i++) {
+    int i;
+    for (i = 0; i < capacity; i++) {
         poolItems[i] = initItem();
     }
 
@@ -25,11 +27,11 @@ Pool* Pool_new(int capacity, POOL_ITEM_TYPE* (*initItem)(void))
     return pool;
 }
 
-void Pool_update(Pool* pool, void (*updateItem)(POOL_ITEM_TYPE* poolItem))
+void ObjectPool_update(BackPool* pool, void (*updateItem)(POOL_ITEM_TYPE* poolItem))
 {
     updateItem(pool->items[pool->currentPosition]);
 
-    Pool_moveForward(pool);
+    ObjectPool_moveForward(pool);
 
     if (pool->subscribers!=NULL)
     {
@@ -43,7 +45,7 @@ void Pool_update(Pool* pool, void (*updateItem)(POOL_ITEM_TYPE* poolItem))
 
 }
 
-void Pool_moveForward(Pool* pool)
+void ObjectPool_moveForward(BackPool* pool)
 {
     pool->lastPosition = pool->currentPosition;
     pool->sequence++;
@@ -63,9 +65,9 @@ void Pool_moveForward(Pool* pool)
     }
 }
 
-POOL_ITEM_TYPE* Pool_item(Pool* pool, int lookBehindIndex)
+POOL_ITEM_TYPE* ObjectPool_item(BackPool* pool, int lookBehindIndex)
 {
-    int absoluteIndex= Pool_getAbsoluteIndex(pool, lookBehindIndex);
+    int absoluteIndex= ObjectPool_getAbsoluteIndex(pool, lookBehindIndex);
     if (absoluteIndex < 0)
     {
         printf("Pool index is out of range.  You can only use index values from 0 to %i\n", pool->length - 1);
@@ -77,7 +79,7 @@ POOL_ITEM_TYPE* Pool_item(Pool* pool, int lookBehindIndex)
     }
 }
 
-int Pool_getAbsoluteIndex(Pool* pool, int lookBehindIndex)
+int ObjectPool_getAbsoluteIndex(BackPool* pool, int lookBehindIndex)
 {
     int targetIndex = pool->lastPosition - lookBehindIndex;
     if (targetIndex < 0)
@@ -96,7 +98,7 @@ int Pool_getAbsoluteIndex(Pool* pool, int lookBehindIndex)
     return targetIndex;
 }
 
-void Pool_subscribe(Pool* pool, void (*poolChange)(POOL_ITEM_TYPE* poolItem))
+void ObjectPool_subscribe(BackPool* pool, void (*poolChange)(POOL_ITEM_TYPE* poolItem))
 {
     PoolSubscriber subscriber;
     subscriber.poolChange= poolChange;
@@ -117,12 +119,12 @@ void Pool_subscribe(Pool* pool, void (*poolChange)(POOL_ITEM_TYPE* poolItem))
     }
 }
 
-POOL_ITEM_TYPE* Pool_current(Pool* pool)
+POOL_ITEM_TYPE* ObjectPool_current(BackPool* pool)
 {
     return pool->items[pool->lastPosition];
 }
 
-POOL_ITEM_TYPE* Pool_previous(Pool* pool)
+POOL_ITEM_TYPE* ObjectPool_previous(BackPool* pool)
 {
     return pool->items[pool->lastPosition - 1];
 }
