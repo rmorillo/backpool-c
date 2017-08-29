@@ -1,0 +1,5 @@
+
+src/bin/Debug/backpool.exe
+*.a
+*.o
+*.exe

@@ -40,39 +40,26 @@ OBJDIR_RELEASE = obj\\Release
 DEP_RELEASE = 
 OUT_RELEASE = bin\\Release\\libbackpool.a
 
-INC_BACKPOOL_STATIC = $(INC)
-CFLAGS_BACKPOOL_STATIC = $(CFLAGS)
-RESINC_BACKPOOL_STATIC = $(RESINC)
-RCFLAGS_BACKPOOL_STATIC = $(RCFLAGS)
-LIBDIR_BACKPOOL_STATIC = $(LIBDIR)
-LIB_BACKPOOL_STATIC = $(LIB)
-LDFLAGS_BACKPOOL_STATIC = $(LDFLAGS)
-OBJDIR_BACKPOOL_STATIC = .objs
-DEP_BACKPOOL_STATIC = 
-OUT_BACKPOOL_STATIC = \\BackPoolTest.exe
-
-INC_BACKPOOL_UNITTEST = $(INC)
-CFLAGS_BACKPOOL_UNITTEST = $(CFLAGS)
-RESINC_BACKPOOL_UNITTEST = $(RESINC)
-RCFLAGS_BACKPOOL_UNITTEST = $(RCFLAGS)
-LIBDIR_BACKPOOL_UNITTEST = $(LIBDIR)
-LIB_BACKPOOL_UNITTEST = $(LIB)
-LDFLAGS_BACKPOOL_UNITTEST = $(LDFLAGS)
-OBJDIR_BACKPOOL_UNITTEST = C:\\Workspace\\GitHub\\backpool-c\\src\\.objs
-DEP_BACKPOOL_UNITTEST = 
-OUT_BACKPOOL_UNITTEST = \\backpool_unittest.exe
+INC_UNITTEST = $(INC)
+CFLAGS_UNITTEST = $(CFLAGS)
+RESINC_UNITTEST = $(RESINC)
+RCFLAGS_UNITTEST = $(RCFLAGS)
+LIBDIR_UNITTEST = $(LIBDIR)
+LIB_UNITTEST = $(LIB)
+LDFLAGS_UNITTEST = $(LDFLAGS)
+OBJDIR_UNITTEST = test\\obj
+DEP_UNITTEST = 
+OUT_UNITTEST = test\\backpool_unittest.exe
 
 OBJ_DEBUG = $(OBJDIR_DEBUG)\\CuTest.o $(OBJDIR_DEBUG)\\backpool_unittest.o $(OBJDIR_DEBUG)\\linkedlist.o $(OBJDIR_DEBUG)\\main.o $(OBJDIR_DEBUG)\\objectpool.o $(OBJDIR_DEBUG)\\scalarpool.o
 
 OBJ_RELEASE = $(OBJDIR_RELEASE)\\CuTest.o $(OBJDIR_RELEASE)\\backpool_unittest.o $(OBJDIR_RELEASE)\\linkedlist.o $(OBJDIR_RELEASE)\\main.o $(OBJDIR_RELEASE)\\objectpool.o $(OBJDIR_RELEASE)\\scalarpool.o
 
-OBJ_BACKPOOL_STATIC = $(OBJDIR_BACKPOOL_STATIC)\\CuTest.o $(OBJDIR_BACKPOOL_STATIC)\\backpool_unittest.o $(OBJDIR_BACKPOOL_STATIC)\\linkedlist.o $(OBJDIR_BACKPOOL_STATIC)\\main.o $(OBJDIR_BACKPOOL_STATIC)\\objectpool.o $(OBJDIR_BACKPOOL_STATIC)\\scalarpool.o
+OBJ_UNITTEST = $(OBJDIR_UNITTEST)\\CuTest.o $(OBJDIR_UNITTEST)\\backpool_unittest.o $(OBJDIR_UNITTEST)\\linkedlist.o $(OBJDIR_UNITTEST)\\main.o $(OBJDIR_UNITTEST)\\objectpool.o $(OBJDIR_UNITTEST)\\scalarpool.o
 
-OBJ_BACKPOOL_UNITTEST = $(OBJDIR_BACKPOOL_UNITTEST)\\CuTest.o $(OBJDIR_BACKPOOL_UNITTEST)\\backpool_unittest.o $(OBJDIR_BACKPOOL_UNITTEST)\\linkedlist.o $(OBJDIR_BACKPOOL_UNITTEST)\\main.o $(OBJDIR_BACKPOOL_UNITTEST)\\objectpool.o $(OBJDIR_BACKPOOL_UNITTEST)\\scalarpool.o
+all: debug release unittest
 
-all: debug release backpool_static backpool_unittest
-
-clean: clean_debug clean_release clean_backpool_static clean_backpool_unittest
+clean: clean_debug clean_release clean_unittest
 
 before_debug: 
 	cmd /c if not exist bin\\Debug md bin\\Debug
@@ -142,69 +129,39 @@ clean_release:
 	cmd /c rd bin\\Release
 	cmd /c rd $(OBJDIR_RELEASE)
 
-before_backpool_static: 
-	cmd /c if not exist $(OBJDIR_BACKPOOL_STATIC) md $(OBJDIR_BACKPOOL_STATIC)
+before_unittest: 
+	cmd /c if not exist test md test
+	cmd /c if not exist $(OBJDIR_UNITTEST) md $(OBJDIR_UNITTEST)
 
-after_backpool_static: 
+after_unittest: 
 
-backpool_static: before_backpool_static out_backpool_static after_backpool_static
+unittest: before_unittest out_unittest after_unittest
 
-out_backpool_static: before_backpool_static $(OBJ_BACKPOOL_STATIC) $(DEP_BACKPOOL_STATIC)
-	$(LD) $(LIBDIR_BACKPOOL_STATIC) -o $(OUT_BACKPOOL_STATIC) $(OBJ_BACKPOOL_STATIC)  $(LDFLAGS_BACKPOOL_STATIC) $(LIB_BACKPOOL_STATIC)
+out_unittest: before_unittest $(OBJ_UNITTEST) $(DEP_UNITTEST)
+	$(LD) $(LIBDIR_UNITTEST) -o $(OUT_UNITTEST) $(OBJ_UNITTEST)  $(LDFLAGS_UNITTEST) $(LIB_UNITTEST)
 
-$(OBJDIR_BACKPOOL_STATIC)\\CuTest.o: CuTest.c
-	$(CC) $(CFLAGS_BACKPOOL_STATIC) $(INC_BACKPOOL_STATIC) -c CuTest.c -o $(OBJDIR_BACKPOOL_STATIC)\\CuTest.o
+$(OBJDIR_UNITTEST)\\CuTest.o: CuTest.c
+	$(CC) $(CFLAGS_UNITTEST) $(INC_UNITTEST) -c CuTest.c -o $(OBJDIR_UNITTEST)\\CuTest.o
 
-$(OBJDIR_BACKPOOL_STATIC)\\backpool_unittest.o: backpool_unittest.c
-	$(CC) $(CFLAGS_BACKPOOL_STATIC) $(INC_BACKPOOL_STATIC) -c backpool_unittest.c -o $(OBJDIR_BACKPOOL_STATIC)\\backpool_unittest.o
+$(OBJDIR_UNITTEST)\\backpool_unittest.o: backpool_unittest.c
+	$(CC) $(CFLAGS_UNITTEST) $(INC_UNITTEST) -c backpool_unittest.c -o $(OBJDIR_UNITTEST)\\backpool_unittest.o
 
-$(OBJDIR_BACKPOOL_STATIC)\\linkedlist.o: linkedlist.c
-	$(CC) $(CFLAGS_BACKPOOL_STATIC) $(INC_BACKPOOL_STATIC) -c linkedlist.c -o $(OBJDIR_BACKPOOL_STATIC)\\linkedlist.o
+$(OBJDIR_UNITTEST)\\linkedlist.o: linkedlist.c
+	$(CC) $(CFLAGS_UNITTEST) $(INC_UNITTEST) -c linkedlist.c -o $(OBJDIR_UNITTEST)\\linkedlist.o
 
-$(OBJDIR_BACKPOOL_STATIC)\\main.o: main.c
-	$(CC) $(CFLAGS_BACKPOOL_STATIC) $(INC_BACKPOOL_STATIC) -c main.c -o $(OBJDIR_BACKPOOL_STATIC)\\main.o
+$(OBJDIR_UNITTEST)\\main.o: main.c
+	$(CC) $(CFLAGS_UNITTEST) $(INC_UNITTEST) -c main.c -o $(OBJDIR_UNITTEST)\\main.o
 
-$(OBJDIR_BACKPOOL_STATIC)\\objectpool.o: objectpool.c
-	$(CC) $(CFLAGS_BACKPOOL_STATIC) $(INC_BACKPOOL_STATIC) -c objectpool.c -o $(OBJDIR_BACKPOOL_STATIC)\\objectpool.o
+$(OBJDIR_UNITTEST)\\objectpool.o: objectpool.c
+	$(CC) $(CFLAGS_UNITTEST) $(INC_UNITTEST) -c objectpool.c -o $(OBJDIR_UNITTEST)\\objectpool.o
 
-$(OBJDIR_BACKPOOL_STATIC)\\scalarpool.o: scalarpool.c
-	$(CC) $(CFLAGS_BACKPOOL_STATIC) $(INC_BACKPOOL_STATIC) -c scalarpool.c -o $(OBJDIR_BACKPOOL_STATIC)\\scalarpool.o
+$(OBJDIR_UNITTEST)\\scalarpool.o: scalarpool.c
+	$(CC) $(CFLAGS_UNITTEST) $(INC_UNITTEST) -c scalarpool.c -o $(OBJDIR_UNITTEST)\\scalarpool.o
 
-clean_backpool_static: 
-	cmd /c del /f $(OBJ_BACKPOOL_STATIC) $(OUT_BACKPOOL_STATIC)
-	cmd /c rd $(OBJDIR_BACKPOOL_STATIC)
+clean_unittest: 
+	cmd /c del /f $(OBJ_UNITTEST) $(OUT_UNITTEST)
+	cmd /c rd test
+	cmd /c rd $(OBJDIR_UNITTEST)
 
-before_backpool_unittest: 
-	cmd /c if not exist $(OBJDIR_BACKPOOL_UNITTEST) md $(OBJDIR_BACKPOOL_UNITTEST)
-
-after_backpool_unittest: 
-
-backpool_unittest: before_backpool_unittest out_backpool_unittest after_backpool_unittest
-
-out_backpool_unittest: before_backpool_unittest $(OBJ_BACKPOOL_UNITTEST) $(DEP_BACKPOOL_UNITTEST)
-	$(LD) $(LIBDIR_BACKPOOL_UNITTEST) -o $(OUT_BACKPOOL_UNITTEST) $(OBJ_BACKPOOL_UNITTEST)  $(LDFLAGS_BACKPOOL_UNITTEST) $(LIB_BACKPOOL_UNITTEST)
-
-$(OBJDIR_BACKPOOL_UNITTEST)\\CuTest.o: CuTest.c
-	$(CC) $(CFLAGS_BACKPOOL_UNITTEST) $(INC_BACKPOOL_UNITTEST) -c CuTest.c -o $(OBJDIR_BACKPOOL_UNITTEST)\\CuTest.o
-
-$(OBJDIR_BACKPOOL_UNITTEST)\\backpool_unittest.o: backpool_unittest.c
-	$(CC) $(CFLAGS_BACKPOOL_UNITTEST) $(INC_BACKPOOL_UNITTEST) -c backpool_unittest.c -o $(OBJDIR_BACKPOOL_UNITTEST)\\backpool_unittest.o
-
-$(OBJDIR_BACKPOOL_UNITTEST)\\linkedlist.o: linkedlist.c
-	$(CC) $(CFLAGS_BACKPOOL_UNITTEST) $(INC_BACKPOOL_UNITTEST) -c linkedlist.c -o $(OBJDIR_BACKPOOL_UNITTEST)\\linkedlist.o
-
-$(OBJDIR_BACKPOOL_UNITTEST)\\main.o: main.c
-	$(CC) $(CFLAGS_BACKPOOL_UNITTEST) $(INC_BACKPOOL_UNITTEST) -c main.c -o $(OBJDIR_BACKPOOL_UNITTEST)\\main.o
-
-$(OBJDIR_BACKPOOL_UNITTEST)\\objectpool.o: objectpool.c
-	$(CC) $(CFLAGS_BACKPOOL_UNITTEST) $(INC_BACKPOOL_UNITTEST) -c objectpool.c -o $(OBJDIR_BACKPOOL_UNITTEST)\\objectpool.o
-
-$(OBJDIR_BACKPOOL_UNITTEST)\\scalarpool.o: scalarpool.c
-	$(CC) $(CFLAGS_BACKPOOL_UNITTEST) $(INC_BACKPOOL_UNITTEST) -c scalarpool.c -o $(OBJDIR_BACKPOOL_UNITTEST)\\scalarpool.o
-
-clean_backpool_unittest: 
-	cmd /c del /f $(OBJ_BACKPOOL_UNITTEST) $(OUT_BACKPOOL_UNITTEST)
-	cmd /c rd $(OBJDIR_BACKPOOL_UNITTEST)
-
-.PHONY: before_debug after_debug clean_debug before_release after_release clean_release before_backpool_static after_backpool_static clean_backpool_static before_backpool_unittest after_backpool_unittest clean_backpool_unittest
+.PHONY: before_debug after_debug clean_debug before_release after_release clean_release before_unittest after_unittest clean_unittest
 

@@ -30,15 +30,9 @@
 					<Add option="-s" />
 				</Linker>
 			</Target>
-			<Target title="backpool-static">
-				<Option output="BackPoolTest" prefix_auto="1" extension_auto="1" />
-				<Option type="1" />
-				<Option compiler="gcc" />
-				<Option use_console_runner="0" />
-			</Target>
-			<Target title="backpool-unittest">
-				<Option output="backpool_unittest" prefix_auto="1" extension_auto="1" />
-				<Option object_output="C:/Workspace/GitHub/backpool-c/src/.objs" />
+			<Target title="UnitTest">
+				<Option output="test/backpool_unittest" prefix_auto="1" extension_auto="1" />
+				<Option object_output="test/obj" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 			</Target>
@@ -56,7 +50,7 @@
 		</Unit>
 		<Unit filename="CuTest.h" />
 		<Unit filename="backpool.h">
-			<Option target="backpool-unittest" />
+			<Option target="UnitTest" />
 		</Unit>
 		<Unit filename="backpool_unittest.c">
 			<Option compilerVar="CC" />
@@ -65,7 +59,7 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="linkedlist.h">
-			<Option target="backpool-unittest" />
+			<Option target="UnitTest" />
 		</Unit>
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
@@ -74,16 +68,16 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="objectpool.h">
-			<Option target="backpool-unittest" />
+			<Option target="UnitTest" />
 		</Unit>
 		<Unit filename="poolitemtype.h">
-			<Option target="backpool-unittest" />
+			<Option target="UnitTest" />
 		</Unit>
 		<Unit filename="scalarpool.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="scalarpool.h">
-			<Option target="backpool-unittest" />
+			<Option target="UnitTest" />
 		</Unit>
 		<Extensions>
 			<code_completion />
