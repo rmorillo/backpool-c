@@ -1,4 +1,4 @@
-<h3>What is a 'backpool'</h3>
+<h3>What is a backpool?</h3>
 
 <b>backpool</b> is a data structure for storing data used in real-time event processing. It uses pre-allocated memory and provides zero-based historical or 'backward' access to its pool items.
 
