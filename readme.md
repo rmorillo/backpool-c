@@ -4,7 +4,7 @@
 
 <h3>Writing</h3>
 
-<b>backpool</b> is similar to a circular buffer. The fixed-size memory is reused or 'written over' when an incremented internal write index exceeds the pool size.  Depending on the backing data type used, writing to the pool can use one of these 2 methods:
+<b>backpool</b> is similar to a circular buffer. The fixed-size memory is reused or 'written over' when an incremented internal write index exceeds the pool size.  Depending on the data type being used, writing to the pool can call one of these 2 methods:
 
 <h4>Assign</h4>
 
