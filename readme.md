@@ -10,9 +10,9 @@
 
 Unlike circular buffer, there is no buffer 'tail' in backpool and reading always starts from the last written item.  backpool offers 3 methods of reading from backpool depending on usage, concurrency and latency requirements.
 
-<h4>Single-threaded direct method</h4>
+<h4>Direct access method (single-threaded)</h4>
 Using current, previous and indexer values.
 
-<h4>Thread-safe subscription method</h4>
+<h4>Subscription method (thread-safe)</h4>
 
-<h4>Thread-safe trailing method</h4>
+<h4>Trailing method (thread-safe)</h4>
