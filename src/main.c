@@ -2,6 +2,7 @@
 #include <stdio.h>
 
 CuSuite* ScalarPoolTestSuite(void);
+CuSuite* ObjectPoolTestSuite(void);
 
 void RunAllTests(void)
 {
@@ -9,6 +10,7 @@ void RunAllTests(void)
 	CuSuite* suite = CuSuiteNew();
 
 	CuSuiteAddSuite(suite, ScalarPoolTestSuite());
+	CuSuiteAddSuite(suite, ObjectPoolTestSuite());
 
 	CuSuiteRun(suite);
 	CuSuiteSummary(suite, output);

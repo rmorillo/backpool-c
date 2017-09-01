@@ -3,7 +3,7 @@
 
 #ifdef SCALAR_POOL_TYPE
     #ifndef POOL_ITEM_TYPE
-        #define POOL_ITEM_TYPE IntPoolItemType
+        #define POOL_ITEM_TYPE IntPoolItemType*
     #endif
 #else
     #ifndef POOL_ITEM_TYPE

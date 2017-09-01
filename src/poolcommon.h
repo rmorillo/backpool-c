@@ -45,7 +45,7 @@ int POOL_TYPE_NAME(getAbsoluteIndex)(BackPool* pool, int lookBehindIndex)
 
 POOL_ITEM_TYPE POOL_TYPE_NAME(item)(BackPool* pool, int lookBehindIndex)
 {
-    int absoluteIndex= ScalarPool_getAbsoluteIndex(pool, lookBehindIndex);
+    int absoluteIndex= POOL_TYPE_NAME(getAbsoluteIndex)(pool, lookBehindIndex);
     if (absoluteIndex < 0)
     {
         printf("Pool index is out of range.  You can only use index values from 0 to %i\n", pool->length - 1);

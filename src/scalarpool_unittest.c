@@ -94,7 +94,7 @@ void TestBackPool_itemPoolIndexOutOfRange(CuTest* tc) {
     CuAssertTrue(tc, ScalarPool_item(pool, 0)==3);
     CuAssertTrue(tc, ScalarPool_item(pool, 1)==2);
     CuAssertTrue(tc, ScalarPool_item(pool, 2)==1);
-    CuAssertTrue(tc, ScalarPool_item(pool, 3)==NAN);
+    CuAssertTrue(tc, isnan(ScalarPool_item(pool, 3)));
 }
 
 void TestBackPool_subscribe(CuTest* tc) {
