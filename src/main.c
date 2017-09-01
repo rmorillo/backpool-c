@@ -1,15 +1,14 @@
+#include "CuTest.h"
 #include <stdio.h>
 
-#include "CuTest.h"
-
-CuSuite* BackPoolTestSuite();
+CuSuite* ScalarPoolTestSuite(void);
 
 void RunAllTests(void)
 {
 	CuString *output = CuStringNew();
 	CuSuite* suite = CuSuiteNew();
 
-	CuSuiteAddSuite(suite, BackPoolTestSuite());
+	CuSuiteAddSuite(suite, ScalarPoolTestSuite());
 
 	CuSuiteRun(suite);
 	CuSuiteSummary(suite, output);
