@@ -13,7 +13,7 @@ void POOL_TYPE_NAME(moveForward)(BackPool* pool)
     {
         pool->length++;
     }
-    if (pool->currentPosition < (pool->capacity -1))
+    if (pool->currentPosition < ((pool->capacity * pool->offset) - pool->offset))
     {
         pool->currentPosition += pool->offset;
     }
@@ -26,7 +26,7 @@ void POOL_TYPE_NAME(moveForward)(BackPool* pool)
 
 int POOL_TYPE_NAME(getAbsoluteIndex)(BackPool* pool, int lookBehindIndex)
 {
-    int targetIndex = pool->lastPosition - lookBehindIndex;
+    int targetIndex = pool->lastPosition - (lookBehindIndex * pool->offset);
     if (targetIndex < 0)
     {
         int absoluteIndex = targetIndex + pool->capacity;
@@ -72,7 +72,7 @@ POOL_ITEM_TYPE POOL_TYPE_NAME(current)(BackPool* pool)
 
 POOL_ITEM_TYPE POOL_TYPE_NAME(previous)(BackPool* pool)
 {
-    return pool->items[pool->lastPosition - 1];
+    return pool->items[pool->lastPosition - pool->offset];
 }
 
 #endif // POOLCOMMON_H_INCLUDED
