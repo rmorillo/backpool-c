@@ -1,8 +1,7 @@
 # depslib dependency file v1.0
-1504278492 source:c:\workspace\github\backpool-c\src\main.c
+1504286292 source:c:\workspace\github\backpool-c\src\main.c
 	"CuTest.h"
 	<stdio.h>
-	"scalarpool_unittest.h"
 
 1503932716 source:c:\workspace\github\backpool-c\src\cutest.c
 	<assert.h>
@@ -26,9 +25,10 @@
 1504282997 c:\workspace\github\backpool-c\src\backpool.h
 	<stdbool.h>
 
-1504285844 c:\workspace\github\backpool-c\src\scalarpool.h
+1504287581 c:\workspace\github\backpool-c\src\scalarpool.h
 	<stdlib.h>
 	"backpool.h"
+	"poolcommon.h"
 
 1504286122 source:c:\workspace\github\backpool-c\src\scalarpool_unittest.c
 	<assert.h>
@@ -56,4 +56,6 @@
 1504285911 c:\workspace\github\backpool-c\src\scalarpool_unittest.h
 	"cutest.h"
 	"scalarpool.h"
+
+1504287556 c:\workspace\github\backpool-c\src\poolcommon.h
 
