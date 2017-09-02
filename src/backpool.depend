@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1504332896 source:c:\workspace\github\backpool-c\src\main.c
+1504350534 source:c:\workspace\github\backpool-c\src\main.c
 	"CuTest.h"
 	<stdio.h>
 
@@ -16,21 +16,18 @@
 	<setjmp.h>
 	<stdarg.h>
 
-1504285175 source:c:\workspace\github\backpool-c\src\scalarpool.c
-	<stdlib.h>
-	<stdio.h>
-	"backpool.h"
+1504342388 source:c:\workspace\github\backpool-c\src\scalarpool.c
 	"scalarpool.h"
+	"poolcommon.c"
 
-1504334039 c:\workspace\github\backpool-c\src\backpool.h
+1504334590 c:\workspace\github\backpool-c\src\backpool.h
 	<stdbool.h>
 
-1504287946 c:\workspace\github\backpool-c\src\scalarpool.h
+1504350511 c:\workspace\github\backpool-c\src\scalarpool.h
 	<stdlib.h>
-	"backpool.h"
-	"poolcommon.h"
+	"poolcommon.c"
 
-1504292045 source:c:\workspace\github\backpool-c\src\scalarpool_unittest.c
+1504350676 source:c:\workspace\github\backpool-c\src\scalarpool_unittest.c
 	<assert.h>
 	<setjmp.h>
 	<stdlib.h>
@@ -38,7 +35,7 @@
 	<string.h>
 	<limits.h>
 	<math.h>
-	"scalarpool.h"
+	"scalarpool.c"
 	"cutest.h"
 
 1504278481 c:\workspace\github\backpool-c\src\scalarpool_unittest.c
@@ -57,9 +54,10 @@
 	"cutest.h"
 	"scalarpool.h"
 
-1504334039 c:\workspace\github\backpool-c\src\poolcommon.h
+1504336094 c:\workspace\github\backpool-c\src\poolcommon.h
+	"backpool.h"
 
-1504332735 source:c:\workspace\github\backpool-c\src\objectpool_unittest.c
+1504349609 source:c:\workspace\github\backpool-c\src\objectpool_unittest.c
 	<assert.h>
 	<setjmp.h>
 	<stdlib.h>
@@ -67,15 +65,43 @@
 	<string.h>
 	<limits.h>
 	<math.h>
+	"objectpool.c"
+	"cutest.h"
+
+1504349788 c:\workspace\github\backpool-c\src\objectpool.h
+	<stdlib.h>
+	"backpool.h"
+	"poolcommon.c"
+
+1504350164 source:c:\workspace\github\backpool-c\src\segmentpool_unittest.c
+	<assert.h>
+	<setjmp.h>
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	<limits.h>
+	<math.h>
+	"segmentpool.c"
+	"cutest.h"
+
+1504350202 c:\workspace\github\backpool-c\src\segmentpool.h
+	<stdlib.h>
+	"backpool.h"
+	"poolcommon.c"
+
+1504338231 source:c:\workspace\github\backpool-c\src\objectpool.c
 	"objectpool.h"
-	"cutest.h"
+	"poolcommon.c"
 
-1504334039 c:\workspace\github\backpool-c\src\objectpool.h
-	<stdlib.h>
-	"backpool.h"
+1504334694 source:c:\workspace\github\backpool-c\src\poolcommon.c
 	"poolcommon.h"
 
-1504302121 source:c:\workspace\github\backpool-c\src\segmentpool_unittest.c
+1504344285 c:\workspace\github\backpool-c\src\poolcommon.c
+	<stdio.h>
+	<stdlib.h>
+	"backpool.h"
+
+1504351030 source:c:\workspace\github\backpool-c\src\pooltrailer_unittest.c
 	<assert.h>
 	<setjmp.h>
 	<stdlib.h>
@@ -83,11 +109,16 @@
 	<string.h>
 	<limits.h>
 	<math.h>
-	"segmentpool.h"
+	"objectpool.c"
 	"cutest.h"
 
-1504303649 c:\workspace\github\backpool-c\src\segmentpool.h
+1504350605 c:\workspace\github\backpool-c\src\scalarpool.c
+	"scalarpool.h"
+
+1504349696 c:\workspace\github\backpool-c\src\objectpool.c
+	"objectpool.h"
+
+1504350286 c:\workspace\github\backpool-c\src\segmentpool.c
 	<stdlib.h>
-	"backpool.h"
-	"poolcommon.h"
+	"segmentpool.h"
 

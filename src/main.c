@@ -4,6 +4,7 @@
 CuSuite* ScalarPoolTestSuite(void);
 CuSuite* ObjectPoolTestSuite(void);
 CuSuite* SegmentPoolTestSuite(void);
+CuSuite* PoolTrailerTestSuite(void);
 
 void RunAllTests(void)
 {
@@ -13,6 +14,7 @@ void RunAllTests(void)
 	CuSuiteAddSuite(suite, ScalarPoolTestSuite());
 	CuSuiteAddSuite(suite, SegmentPoolTestSuite());
 	CuSuiteAddSuite(suite, ObjectPoolTestSuite());
+	CuSuiteAddSuite(suite, PoolTrailerTestSuite());
 
 	CuSuiteRun(suite);
 	CuSuiteSummary(suite, output);

@@ -1185,10 +1185,72 @@ extern double __attribute__((__cdecl__)) fma (double, double, double);
 extern float __attribute__((__cdecl__)) fmaf (float, float, float);
 extern long double __attribute__((__cdecl__)) fmal (long double, long double, long double);
 # 8 "scalarpool_unittest.c" 2
-# 1 "scalarpool_unittest.h" 1
 
 
 
+# 1 "scalarpool.h" 1
+
+
+
+
+
+# 1 "backpool.h" 1
+# 14 "backpool.h"
+typedef int IntPoolItemType;
+
+typedef struct IntObjectPool {
+    int value;
+} IntObjectPool;
+
+# 1 "C:/Program Files (x86)/CodeBlocks/MinGW/lib/gcc/mingw32/4.9.2/include/stdbool.h" 1 3 4
+# 21 "backpool.h" 2
+
+
+
+
+
+
+typedef struct BackPool
+{
+    float* items;
+    int subscriberSize;
+    void (**subscribers)(float poolItem);
+    float defaultValue;
+    int capacity;
+    int lastPosition;
+    int currentPosition;
+    int sequence;
+    int length;
+    _Bool hasRolledOver;
+    int offset;
+
+} BackPool;
+# 7 "scalarpool.h" 2
+
+BackPool* ScalarPool_new(int capacity, float initValue);
+
+void ScalarPool_assign(BackPool* pool, float value);
+# 12 "scalarpool_unittest.c" 2
+# 1 "poolcommon.h" 1
+
+
+
+
+
+
+
+void ScalarPool_moveForward(BackPool* pool);
+
+int ScalarPool_getAbsoluteIndex(BackPool* pool, int lookBehindIndex);
+
+float ScalarPool_item(BackPool* pool, int lookBehindIndex);
+
+void ScalarPool_subscribe(BackPool* pool, void (*poolChange)(float poolItem));
+
+float ScalarPool_current(BackPool* pool);
+
+float ScalarPool_previous(BackPool* pool);
+# 13 "scalarpool_unittest.c" 2
 # 1 "cutest.h" 1
 
 
@@ -1283,63 +1345,14 @@ void CuSuiteAddSuite(CuSuite* testSuite, CuSuite* testSuite2);
 void CuSuiteRun(CuSuite* testSuite);
 void CuSuiteSummary(CuSuite* testSuite, CuString* summary);
 void CuSuiteDetails(CuSuite* testSuite, CuString* details);
-# 5 "scalarpool_unittest.h" 2
-
-
-
-CuSuite* ScalarPoolTestSuite(void);
-# 9 "scalarpool_unittest.c" 2
-# 1 "backpool.h" 1
-# 14 "backpool.h"
-typedef struct IntObjectPool {
-    int value;
-} IntObjectPool;
-
-# 1 "C:/Program Files (x86)/CodeBlocks/MinGW/lib/gcc/mingw32/4.9.2/include/stdbool.h" 1 3 4
-# 19 "backpool.h" 2
-
-
-
-
-
-
-typedef struct BackPool
-{
-    float* items;
-    int subscriberSize;
-    void (**subscribers)(float poolItem);
-    float defaultValue;
-    int capacity;
-    int lastPosition;
-    int currentPosition;
-    int sequence;
-    int length;
-    _Bool hasRolledOver;
-    int offset;
-
-} BackPool;
-# 10 "scalarpool_unittest.c" 2
-# 1 "scalarpool.h" 1
-
-
-
-BackPool* ScalarPool_new(int capacity, float initValue);
-void ScalarPool_assign(BackPool* pool, float poolItem);
-float ScalarPool_current(BackPool* pool);
-float ScalarPool_previous(BackPool* pool);
-float ScalarPool_item(BackPool* pool, int index);
-void ScalarPool_moveForward(BackPool* pool);
-int ScalarPool_getAbsoluteIndex(BackPool* pool, int lookBehindIndex);
-void ScalarPool_subscribe(BackPool* pool, void (*poolChange)(float poolItem));
-# 11 "scalarpool_unittest.c" 2
-
+# 14 "scalarpool_unittest.c" 2
 
 void TestBackPool_capacity(CuTest* tc) {
     int capacity= 3;
 
     BackPool* pool = ScalarPool_new(capacity, __builtin_nan(""));
 
-    CuAssert_Line((tc), "scalarpool_unittest.c", 18, "assert failed", (pool->capacity==capacity));
+    CuAssert_Line((tc), "scalarpool_unittest.c", 20, "assert failed", (pool->capacity==capacity));
 }
 
 void TestBackPool_update(CuTest* tc) {
@@ -1349,11 +1362,12 @@ void TestBackPool_update(CuTest* tc) {
 
     ScalarPool_assign(pool, 1.1f);
 
-    CuAssert_Line((tc), "scalarpool_unittest.c", 28, "assert failed", (pool->length==1));
-    CuAssert_Line((tc), "scalarpool_unittest.c", 29, "assert failed", (pool->sequence==1));
-    CuAssert_Line((tc), "scalarpool_unittest.c", 30, "assert failed", (pool->lastPosition==0));
-    CuAssert_Line((tc), "scalarpool_unittest.c", 31, "assert failed", (pool->currentPosition==1));
-    CuAssert_Line((tc), "scalarpool_unittest.c", 32, "assert failed", (ScalarPool_current(pool)==1.1));
+    CuAssert_Line((tc), "scalarpool_unittest.c", 30, "assert failed", (pool->length==1));
+    CuAssert_Line((tc), "scalarpool_unittest.c", 31, "assert failed", (pool->sequence==1));
+    CuAssert_Line((tc), "scalarpool_unittest.c", 32, "assert failed", (pool->lastPosition==0));
+    CuAssert_Line((tc), "scalarpool_unittest.c", 33, "assert failed", (pool->currentPosition==1));
+    float currentValue= ScalarPool_current(pool);
+    CuAssert_Line((tc), "scalarpool_unittest.c", 35, "assert failed", (round(currentValue * 10)==11));
 }
 
 void TestBackPool_consecutiveUpdates(CuTest* tc) {
@@ -1364,13 +1378,13 @@ void TestBackPool_consecutiveUpdates(CuTest* tc) {
     ScalarPool_assign(pool, 1);
     ScalarPool_assign(pool, 2);
 
-    CuAssert_Line((tc), "scalarpool_unittest.c", 43, "assert failed", (pool->length==2));
-    CuAssert_Line((tc), "scalarpool_unittest.c", 44, "assert failed", (pool->sequence==2));
-    CuAssert_Line((tc), "scalarpool_unittest.c", 45, "assert failed", (pool->lastPosition==1));
-    CuAssert_Line((tc), "scalarpool_unittest.c", 46, "assert failed", (pool->currentPosition==2));
-    CuAssert_Line((tc), "scalarpool_unittest.c", 47, "assert failed", (ScalarPool_current(pool)==2));
-    CuAssert_Line((tc), "scalarpool_unittest.c", 48, "assert failed", (ScalarPool_previous(pool)==1));
-    CuAssert_Line((tc), "scalarpool_unittest.c", 49, "assert failed", (!pool->hasRolledOver));
+    CuAssert_Line((tc), "scalarpool_unittest.c", 46, "assert failed", (pool->length==2));
+    CuAssert_Line((tc), "scalarpool_unittest.c", 47, "assert failed", (pool->sequence==2));
+    CuAssert_Line((tc), "scalarpool_unittest.c", 48, "assert failed", (pool->lastPosition==1));
+    CuAssert_Line((tc), "scalarpool_unittest.c", 49, "assert failed", (pool->currentPosition==2));
+    CuAssert_Line((tc), "scalarpool_unittest.c", 50, "assert failed", (ScalarPool_current(pool)==2));
+    CuAssert_Line((tc), "scalarpool_unittest.c", 51, "assert failed", (ScalarPool_previous(pool)==1));
+    CuAssert_Line((tc), "scalarpool_unittest.c", 52, "assert failed", (!pool->hasRolledOver));
 }
 
 void TestBackPool_rollOver(CuTest* tc) {
@@ -1382,13 +1396,13 @@ void TestBackPool_rollOver(CuTest* tc) {
     ScalarPool_assign(pool, 2);
     ScalarPool_assign(pool, 3);
 
-    CuAssert_Line((tc), "scalarpool_unittest.c", 61, "assert failed", (pool->hasRolledOver));
-    CuAssert_Line((tc), "scalarpool_unittest.c", 62, "assert failed", (pool->length==3));
-    CuAssert_Line((tc), "scalarpool_unittest.c", 63, "assert failed", (pool->sequence==3));
-    CuAssert_Line((tc), "scalarpool_unittest.c", 64, "assert failed", (pool->lastPosition==2));
-    CuAssert_Line((tc), "scalarpool_unittest.c", 65, "assert failed", (pool->currentPosition==0));
-    CuAssert_Line((tc), "scalarpool_unittest.c", 66, "assert failed", (ScalarPool_current(pool)==3));
-    CuAssert_Line((tc), "scalarpool_unittest.c", 67, "assert failed", (ScalarPool_previous(pool)==2));
+    CuAssert_Line((tc), "scalarpool_unittest.c", 64, "assert failed", (pool->hasRolledOver));
+    CuAssert_Line((tc), "scalarpool_unittest.c", 65, "assert failed", (pool->length==3));
+    CuAssert_Line((tc), "scalarpool_unittest.c", 66, "assert failed", (pool->sequence==3));
+    CuAssert_Line((tc), "scalarpool_unittest.c", 67, "assert failed", (pool->lastPosition==2));
+    CuAssert_Line((tc), "scalarpool_unittest.c", 68, "assert failed", (pool->currentPosition==0));
+    CuAssert_Line((tc), "scalarpool_unittest.c", 69, "assert failed", (ScalarPool_current(pool)==3));
+    CuAssert_Line((tc), "scalarpool_unittest.c", 70, "assert failed", (ScalarPool_previous(pool)==2));
 }
 
 void TestBackPool_item(CuTest* tc) {
@@ -1400,9 +1414,9 @@ void TestBackPool_item(CuTest* tc) {
     ScalarPool_assign(pool, 2);
     ScalarPool_assign(pool, 3);
 
-    CuAssert_Line((tc), "scalarpool_unittest.c", 79, "assert failed", (ScalarPool_item(pool, 0)==3));
-    CuAssert_Line((tc), "scalarpool_unittest.c", 80, "assert failed", (ScalarPool_item(pool, 1)==2));
-    CuAssert_Line((tc), "scalarpool_unittest.c", 81, "assert failed", (ScalarPool_item(pool, 2)==1));
+    CuAssert_Line((tc), "scalarpool_unittest.c", 82, "assert failed", (ScalarPool_item(pool, 0)==3));
+    CuAssert_Line((tc), "scalarpool_unittest.c", 83, "assert failed", (ScalarPool_item(pool, 1)==2));
+    CuAssert_Line((tc), "scalarpool_unittest.c", 84, "assert failed", (ScalarPool_item(pool, 2)==1));
 }
 
 void TestBackPool_itemPoolIndexOutOfRange(CuTest* tc) {
@@ -1414,10 +1428,10 @@ void TestBackPool_itemPoolIndexOutOfRange(CuTest* tc) {
     ScalarPool_assign(pool, 2);
     ScalarPool_assign(pool, 3);
 
-    CuAssert_Line((tc), "scalarpool_unittest.c", 93, "assert failed", (ScalarPool_item(pool, 0)==3));
-    CuAssert_Line((tc), "scalarpool_unittest.c", 94, "assert failed", (ScalarPool_item(pool, 1)==2));
-    CuAssert_Line((tc), "scalarpool_unittest.c", 95, "assert failed", (ScalarPool_item(pool, 2)==1));
-    CuAssert_Line((tc), "scalarpool_unittest.c", 96, "assert failed", (ScalarPool_item(pool, 3)==__builtin_nan("")));
+    CuAssert_Line((tc), "scalarpool_unittest.c", 96, "assert failed", (ScalarPool_item(pool, 0)==3));
+    CuAssert_Line((tc), "scalarpool_unittest.c", 97, "assert failed", (ScalarPool_item(pool, 1)==2));
+    CuAssert_Line((tc), "scalarpool_unittest.c", 98, "assert failed", (ScalarPool_item(pool, 2)==1));
+    CuAssert_Line((tc), "scalarpool_unittest.c", 99, "assert failed", ((sizeof (ScalarPool_item(pool, 3)) == sizeof (float) ? __isnanf (ScalarPool_item(pool, 3)) : sizeof (ScalarPool_item(pool, 3)) == sizeof (double) ? __isnan (ScalarPool_item(pool, 3)) : __isnanl (ScalarPool_item(pool, 3)))));
 }
 
 void TestBackPool_subscribe(CuTest* tc) {
@@ -1436,14 +1450,14 @@ void TestBackPool_subscribe(CuTest* tc) {
     ScalarPool_assign(pool, 2);
     ScalarPool_assign(pool, 3);
 
-    CuAssert_Line((tc), "scalarpool_unittest.c", 115, "assert failed", (poolItem1Index == 3));
-    CuAssert_Line((tc), "scalarpool_unittest.c", 116, "assert failed", (poolItem2Index == 3));
-    CuAssert_Line((tc), "scalarpool_unittest.c", 117, "assert failed", (ScalarPool_item(pool, 0) == poolItem1[2]));
-    CuAssert_Line((tc), "scalarpool_unittest.c", 118, "assert failed", (ScalarPool_item(pool, 0) == poolItem2[2]));
-    CuAssert_Line((tc), "scalarpool_unittest.c", 119, "assert failed", (ScalarPool_item(pool, 1) == poolItem1[1]));
-    CuAssert_Line((tc), "scalarpool_unittest.c", 120, "assert failed", (ScalarPool_item(pool, 1) == poolItem2[1]));
-    CuAssert_Line((tc), "scalarpool_unittest.c", 121, "assert failed", (ScalarPool_item(pool, 2) == poolItem1[0]));
-    CuAssert_Line((tc), "scalarpool_unittest.c", 122, "assert failed", (ScalarPool_item(pool, 2) == poolItem2[0]));
+    CuAssert_Line((tc), "scalarpool_unittest.c", 118, "assert failed", (poolItem1Index == 3));
+    CuAssert_Line((tc), "scalarpool_unittest.c", 119, "assert failed", (poolItem2Index == 3));
+    CuAssert_Line((tc), "scalarpool_unittest.c", 120, "assert failed", (ScalarPool_item(pool, 0) == poolItem1[2]));
+    CuAssert_Line((tc), "scalarpool_unittest.c", 121, "assert failed", (ScalarPool_item(pool, 0) == poolItem2[2]));
+    CuAssert_Line((tc), "scalarpool_unittest.c", 122, "assert failed", (ScalarPool_item(pool, 1) == poolItem1[1]));
+    CuAssert_Line((tc), "scalarpool_unittest.c", 123, "assert failed", (ScalarPool_item(pool, 1) == poolItem2[1]));
+    CuAssert_Line((tc), "scalarpool_unittest.c", 124, "assert failed", (ScalarPool_item(pool, 2) == poolItem1[0]));
+    CuAssert_Line((tc), "scalarpool_unittest.c", 125, "assert failed", (ScalarPool_item(pool, 2) == poolItem2[0]));
 }
 
 CuSuite* ScalarPoolTestSuite(void)

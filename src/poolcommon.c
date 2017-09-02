@@ -1,9 +1,6 @@
-#ifndef POOLCOMMON_H_INCLUDED
-#define POOLCOMMON_H_INCLUDED
-#ifndef POOL_TYPE_NAME
-#define POOL_TYPE_NAME(x) BackPool ## _ ## x
-#endif // POOL_TYPE_NAME
-
+#include <stdio.h>
+#include <stdlib.h>
+#include "backpool.h"
 void POOL_TYPE_NAME(moveForward)(BackPool* pool)
 {
     pool->lastPosition = pool->currentPosition;
@@ -74,5 +71,3 @@ POOL_ITEM_TYPE POOL_TYPE_NAME(previous)(BackPool* pool)
 {
     return pool->items[pool->lastPosition - pool->offset];
 }
-
-#endif // POOLCOMMON_H_INCLUDED
