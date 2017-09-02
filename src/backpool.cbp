@@ -7,7 +7,7 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="bin/Debug/backpool" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Debug/backpool_unittest" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -43,8 +43,33 @@
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="objectpool.c">
+			<Option compilerVar="CC" />
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="objectpool.h">
+			<Option target="Release" />
+		</Unit>
 		<Unit filename="objectpool_unittest.c">
 			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="poolcommon.c">
+			<Option compilerVar="CC" />
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="pooltrailer.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="pooltrailer.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="pooltrailer_unittest.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="scalarpool.c">
+			<Option compilerVar="CC" />
+			<Option target="Release" />
 		</Unit>
 		<Unit filename="scalarpool.h">
 			<Option target="Release" />
@@ -52,7 +77,13 @@
 		<Unit filename="scalarpool_unittest.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="segmentpool.h" />
+		<Unit filename="segmentpool.c">
+			<Option compilerVar="CC" />
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="segmentpool.h">
+			<Option target="Release" />
+		</Unit>
 		<Unit filename="segmentpool_unittest.c">
 			<Option compilerVar="CC" />
 		</Unit>

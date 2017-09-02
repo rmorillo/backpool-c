@@ -101,7 +101,7 @@
 	<stdlib.h>
 	"backpool.h"
 
-1504351030 source:c:\workspace\github\backpool-c\src\pooltrailer_unittest.c
+1504367502 source:c:\workspace\github\backpool-c\src\pooltrailer_unittest.c
 	<assert.h>
 	<setjmp.h>
 	<stdlib.h>
@@ -110,6 +110,7 @@
 	<limits.h>
 	<math.h>
 	"objectpool.c"
+	"pooltrailer.h"
 	"cutest.h"
 
 1504350605 c:\workspace\github\backpool-c\src\scalarpool.c
@@ -121,4 +122,12 @@
 1504350286 c:\workspace\github\backpool-c\src\segmentpool.c
 	<stdlib.h>
 	"segmentpool.h"
+
+1504367327 c:\workspace\github\backpool-c\src\pooltrailer.h
+	"backpool.h"
+
+1504367349 source:c:\workspace\github\backpool-c\src\pooltrailer.c
+	<stdio.h>
+	<stdlib.h>
+	"pooltrailer.h"
 
