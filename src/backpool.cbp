@@ -43,7 +43,7 @@
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="scalarpool.c">
+		<Unit filename="objectpool_unittest.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="scalarpool.h">
@@ -52,7 +52,10 @@
 		<Unit filename="scalarpool_unittest.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="scalarpool_unittest.h" />
+		<Unit filename="segmentpool.h" />
+		<Unit filename="segmentpool_unittest.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Extensions>
 			<code_completion />
 			<envvars />
