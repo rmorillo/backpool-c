@@ -1,11 +1,11 @@
 #define SCALARPOOL_TYPE
 #include "scalarpool.h"
 
-BackPool* POOL_TYPE_NAME(new)(int capacity, POOL_ITEM_TYPE initValue)
+POOL_NAME* POOL_TYPE_NAME(new)(int capacity, POOL_ITEM_PTR initValue)
 {
-    BackPool* pool = malloc(sizeof(struct BackPool));
+    POOL_NAME* pool = malloc(sizeof(struct POOL_NAME));
 
-    POOL_ITEM_TYPE* poolItems= malloc(capacity * sizeof(POOL_ITEM_TYPE));
+    POOL_ITEM_PTR* poolItems= malloc(capacity * sizeof(POOL_ITEM_PTR));
 
     int i;
     for (i = 0; i < capacity; i++) {
@@ -26,7 +26,7 @@ BackPool* POOL_TYPE_NAME(new)(int capacity, POOL_ITEM_TYPE initValue)
     return pool;
 }
 
-void POOL_TYPE_NAME(assign)(BackPool* pool, POOL_ITEM_TYPE value)
+void POOL_TYPE_NAME(assign)(POOL_NAME* pool, POOL_ITEM_PTR value)
 {
     pool->items[pool->currentPosition] = value;
 

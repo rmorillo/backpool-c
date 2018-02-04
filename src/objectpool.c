@@ -1,10 +1,10 @@
 #include "objectpool.h"
 
-BackPool* POOL_TYPE_NAME(new)(int capacity, POOL_ITEM_TYPE (*initItem)(void))
+POOL_NAME* POOL_TYPE_NAME(new)(int capacity, POOL_ITEM_PTR (*initItem)(void))
 {
-    BackPool* pool = malloc(sizeof(struct BackPool));
+    POOL_NAME* pool = malloc(sizeof(struct POOL_NAME));
 
-    POOL_ITEM_TYPE* poolItems= malloc(capacity * sizeof(struct POOL_ITEM_TYPE));
+    POOL_ITEM_PTR* poolItems= malloc(capacity * sizeof(struct POOL_ITEM_PTR));
 
     int i;
     for (i = 0; i < capacity; i++) {
@@ -25,7 +25,7 @@ BackPool* POOL_TYPE_NAME(new)(int capacity, POOL_ITEM_TYPE (*initItem)(void))
     return pool;
 }
 
-void POOL_TYPE_NAME(update)(BackPool* pool, void (*updateItem)(POOL_ITEM_TYPE poolItem))
+void POOL_TYPE_NAME(update)(POOL_NAME* pool, void (*updateItem)(POOL_ITEM_PTR poolItem))
 {
     updateItem(pool->items[pool->currentPosition]);
 

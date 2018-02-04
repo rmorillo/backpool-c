@@ -2,12 +2,12 @@
 #define BACKPOOL_H_INCLUDED
 
 #ifdef SCALAR_POOL_TYPE
-    #ifndef POOL_ITEM_TYPE
-        #define POOL_ITEM_TYPE IntPoolItemType*
+    #ifndef POOL_ITEM_PTR
+        #define POOL_ITEM_PTR IntPoolItemType*
     #endif
 #else
-    #ifndef POOL_ITEM_TYPE
-        #define POOL_ITEM_TYPE IntObjectPool*
+    #ifndef POOL_ITEM_PTR
+        #define POOL_ITEM_PTR IntObjectPool*
     #endif
 #endif // SCALAR_POOL_TYPE
 
@@ -20,16 +20,20 @@ typedef struct IntObjectPool {
 #include <stdbool.h>
 #define LAMBDA(c_) ({ c_ _;})
 
+#ifndef POOL_NAME
+#define POOL_NAME BackPools
+#endif
+
 #ifndef NULL
 #define NULL ( (void *) 0)
 #endif // NULL
 
-typedef struct BackPool
+typedef struct POOL_NAME
 {
-    POOL_ITEM_TYPE* items;
+    POOL_ITEM_PTR* items;
     int subscriberSize;
-    void (**subscribers)(POOL_ITEM_TYPE poolItem);
-    POOL_ITEM_TYPE defaultValue;
+    void (**subscribers)(POOL_ITEM_PTR poolItem);
+    POOL_ITEM_PTR defaultValue;
     int capacity;
     int lastPosition;
     int currentPosition;
@@ -38,6 +42,6 @@ typedef struct BackPool
     bool hasRolledOver;
     int offset;
 
-} BackPool;
+} POOL_NAME;
 
 #endif

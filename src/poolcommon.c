@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "backpool.h"
-void POOL_TYPE_NAME(moveForward)(BackPool* pool)
+void POOL_TYPE_NAME(moveForward)(POOL_NAME* pool)
 {
     pool->lastPosition = pool->currentPosition;
     pool->sequence++;
@@ -21,7 +21,7 @@ void POOL_TYPE_NAME(moveForward)(BackPool* pool)
     }
 }
 
-int POOL_TYPE_NAME(getAbsoluteIndex)(BackPool* pool, int lookBehindIndex)
+int POOL_TYPE_NAME(getAbsoluteIndex)(POOL_NAME* pool, int lookBehindIndex)
 {
     int targetIndex = pool->lastPosition - (lookBehindIndex * pool->offset);
     if (targetIndex < 0)
@@ -40,7 +40,7 @@ int POOL_TYPE_NAME(getAbsoluteIndex)(BackPool* pool, int lookBehindIndex)
     return targetIndex;
 }
 
-POOL_ITEM_TYPE POOL_TYPE_NAME(item)(BackPool* pool, int lookBehindIndex)
+POOL_ITEM_PTR POOL_TYPE_NAME(item)(POOL_NAME* pool, int lookBehindIndex)
 {
     int absoluteIndex= POOL_TYPE_NAME(getAbsoluteIndex)(pool, lookBehindIndex);
     if (absoluteIndex < 0)
@@ -54,7 +54,7 @@ POOL_ITEM_TYPE POOL_TYPE_NAME(item)(BackPool* pool, int lookBehindIndex)
     }
 }
 
-void POOL_TYPE_NAME(subscribe)(BackPool* pool, void (*poolChange)(POOL_ITEM_TYPE poolItem))
+void POOL_TYPE_NAME(subscribe)(POOL_NAME* pool, void (*poolChange)(POOL_ITEM_PTR poolItem))
 {
     pool->subscriberSize++;
     pool->subscribers= realloc(pool->subscribers, pool->subscriberSize * sizeof(void*));
@@ -62,12 +62,12 @@ void POOL_TYPE_NAME(subscribe)(BackPool* pool, void (*poolChange)(POOL_ITEM_TYPE
 
 }
 
-POOL_ITEM_TYPE POOL_TYPE_NAME(current)(BackPool* pool)
+POOL_ITEM_PTR POOL_TYPE_NAME(current)(POOL_NAME* pool)
 {
     return pool->items[pool->lastPosition];
 }
 
-POOL_ITEM_TYPE POOL_TYPE_NAME(previous)(BackPool* pool)
+POOL_ITEM_PTR POOL_TYPE_NAME(previous)(POOL_NAME* pool)
 {
     return pool->items[pool->lastPosition - pool->offset];
 }

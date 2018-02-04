@@ -1,11 +1,12 @@
 #include <stdlib.h>
+#include <string.h>
 #include "segmentpool.h"
 
-BackPool* POOL_TYPE_NAME(new)(int capacity, int segmentSize, POOL_ITEM_TYPE initValue)
+POOL_NAME* POOL_TYPE_NAME(new)(int capacity, int segmentSize, POOL_ITEM_PTR initValue)
 {
-    BackPool* pool = malloc(sizeof(struct BackPool));
+    POOL_NAME* pool = malloc(sizeof(struct POOL_NAME));
 
-    POOL_ITEM_TYPE* poolItems= malloc(capacity * segmentSize * sizeof(POOL_ITEM_TYPE));
+    POOL_ITEM_PTR* poolItems= malloc(capacity * segmentSize * sizeof(POOL_ITEM_PTR));
 
     int i;
     for (i = 0; i < capacity; i++) {
@@ -26,7 +27,7 @@ BackPool* POOL_TYPE_NAME(new)(int capacity, int segmentSize, POOL_ITEM_TYPE init
     return pool;
 }
 
-void POOL_TYPE_NAME(assign)(BackPool* pool, POOL_ITEM_TYPE values)
+void POOL_TYPE_NAME(assign)(POOL_NAME* pool, POOL_ITEM_PTR values)
 {
     memcpy(&pool->items[pool->currentPosition], &values, pool->offset * sizeof(&values));
 

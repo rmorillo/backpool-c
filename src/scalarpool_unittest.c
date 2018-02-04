@@ -5,8 +5,8 @@
 #include <string.h>
 #include <limits.h>
 #include <math.h>
-
-#define POOL_ITEM_TYPE float
+#define POOL_NAME BackPool
+#define POOL_ITEM_PTR float
 #define POOL_TYPE_NAME(x) FloatScalarPool ## _ ## x
 #include "scalarpool.c"
 #include "cutest.h"
@@ -102,13 +102,13 @@ void TestBackPool_subscribe(CuTest* tc) {
     int capacity= 3;
     int poolItem1Index= 0;
     int poolItem2Index= 0;
-    POOL_ITEM_TYPE poolItem1[3];
-    POOL_ITEM_TYPE poolItem2[3];
+    POOL_ITEM_PTR poolItem1[3];
+    POOL_ITEM_PTR poolItem2[3];
 
     BackPool* pool = FloatScalarPool_new(capacity, NAN);
 
-    FloatScalarPool_subscribe(pool, LAMBDA(void _(POOL_ITEM_TYPE poolItem) { poolItem1[poolItem1Index]= poolItem; poolItem1Index++;}));
-    FloatScalarPool_subscribe(pool, LAMBDA(void _(POOL_ITEM_TYPE poolItem) { poolItem2[poolItem2Index]= poolItem; poolItem2Index++;}));
+    FloatScalarPool_subscribe(pool, LAMBDA(void _(POOL_ITEM_PTR poolItem) { poolItem1[poolItem1Index]= poolItem; poolItem1Index++;}));
+    FloatScalarPool_subscribe(pool, LAMBDA(void _(POOL_ITEM_PTR poolItem) { poolItem2[poolItem2Index]= poolItem; poolItem2Index++;}));
 
     FloatScalarPool_assign(pool, 1);
     FloatScalarPool_assign(pool, 2);

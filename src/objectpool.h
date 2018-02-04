@@ -8,8 +8,8 @@
 #endif // POOL_TYPE_NAME
 #include "poolcommon.c"
 
-BackPool* ObjectPool_new(int capacity, POOL_ITEM_TYPE (*initItem)(void));
+POOL_NAME* ObjectPool_new(int capacity, POOL_ITEM_PTR (*initItem)(void));
 
-void ObjectPool_update(BackPool* pool, void (*updateItem)(POOL_ITEM_TYPE poolItem));
+void ObjectPool_update(POOL_NAME* pool, void (*updateItem)(POOL_ITEM_PTR poolItem));
 
 #endif // OBJECTPOOL_H_INCLUDED

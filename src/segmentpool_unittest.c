@@ -5,8 +5,9 @@
 #include <string.h>
 #include <limits.h>
 #include <math.h>
+#define POOL_NAME BackPool
 #define SCALARPOOL_TYPE
-#define POOL_ITEM_TYPE float*
+#define POOL_ITEM_PTR float*
 #define POOL_TYPE_NAME(x) FloatSegmentPool ## _ ## x
 #include "segmentpool.c"
 #include "cutest.h"
@@ -104,13 +105,13 @@ void TestScalarPool_subscribe(CuTest* tc) {
     int capacity= 3;
     int poolItem1Index= 0;
     int poolItem2Index= 0;
-    POOL_ITEM_TYPE poolItem1[3];
-    POOL_ITEM_TYPE poolItem2[3];
+    POOL_ITEM_PTR poolItem1[3];
+    POOL_ITEM_PTR poolItem2[3];
 
     BackPool* pool = FloatSegmentPool_new(capacity, 3, (TriFloat){NAN, NAN, NAN});
 
-    FloatSegmentPool_subscribe(pool, LAMBDA(void _(POOL_ITEM_TYPE poolItem) { poolItem1[poolItem1Index]= poolItem; poolItem1Index++;}));
-    FloatSegmentPool_subscribe(pool, LAMBDA(void _(POOL_ITEM_TYPE poolItem) { poolItem2[poolItem2Index]= poolItem; poolItem2Index++;}));
+    FloatSegmentPool_subscribe(pool, LAMBDA(void _(POOL_ITEM_PTR poolItem) { poolItem1[poolItem1Index]= poolItem; poolItem1Index++;}));
+    FloatSegmentPool_subscribe(pool, LAMBDA(void _(POOL_ITEM_PTR poolItem) { poolItem2[poolItem2Index]= poolItem; poolItem2Index++;}));
 
     FloatSegmentPool_assign(pool, (TriFloat){1, 0, 0});
     FloatSegmentPool_assign(pool, (TriFloat){2, 0, 0});

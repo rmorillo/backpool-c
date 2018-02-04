@@ -7,8 +7,8 @@
 #endif //POOL_TYPE_NAME
 #include "poolcommon.c"
 
-BackPool* ScalarPool_new(int capacity, POOL_ITEM_TYPE initValue);
+POOL_NAME* ScalarPool_new(int capacity, POOL_ITEM_PTR initValue);
 
-void ScalarPool_assign(BackPool* pool, POOL_ITEM_TYPE value);
+void ScalarPool_assign(POOL_NAME* pool, POOL_ITEM_PTR value);
 
 #endif

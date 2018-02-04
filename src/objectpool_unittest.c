@@ -5,7 +5,11 @@
 #include <string.h>
 #include <limits.h>
 #include <math.h>
-#define POOL_ITEM_TYPE FloatPoolItem*
+
+#define POOL_NAME BackPool
+
+#define POOL_ITEM_TYPE FloatPoolItem
+#define POOL_ITEM_PTR FloatPoolItem*
 
 typedef struct FloatPoolItem {
     float value;
@@ -16,16 +20,16 @@ typedef struct FloatPoolItem {
 #include "objectpool.c"
 #include "cutest.h"
 
-POOL_ITEM_TYPE PoolItem_new(float value)
+POOL_ITEM_PTR PoolItem_new(float value)
 {
-    POOL_ITEM_TYPE item = malloc(sizeof(struct POOL_ITEM_TYPE));
+    POOL_ITEM_PTR item = malloc(sizeof(struct POOL_ITEM_TYPE));
 
     item->value = value;
 
     return item;
 }
 
-void PoolItem_update(POOL_ITEM_TYPE poolItem, float value)
+void PoolItem_update(POOL_ITEM_PTR poolItem, float value)
 {
     poolItem->value = value;
 }
@@ -33,7 +37,7 @@ void PoolItem_update(POOL_ITEM_TYPE poolItem, float value)
 void TestFloatObjectPool_capacity(CuTest* tc) {
     int capacity= 3;
 
-    BackPool* pool = FloatObjectPool_new(capacity, LAMBDA(POOL_ITEM_TYPE _(void){ return PoolItem_new(NAN);}));
+    BackPool* pool = FloatObjectPool_new(capacity, LAMBDA(POOL_ITEM_PTR _(void){ return PoolItem_new(NAN);}));
 
     CuAssertTrue(tc, pool->capacity==capacity);
 }
@@ -41,9 +45,9 @@ void TestFloatObjectPool_capacity(CuTest* tc) {
 void TestFloatObjectPool_update(CuTest* tc) {
     int capacity= 3;
 
-    BackPool* pool = FloatObjectPool_new(capacity, LAMBDA(POOL_ITEM_TYPE _(void){ return PoolItem_new(NAN);}));
+    BackPool* pool = FloatObjectPool_new(capacity, LAMBDA(POOL_ITEM_PTR _(void){ return PoolItem_new(NAN);}));
 
-    FloatObjectPool_update(pool, LAMBDA(void _(POOL_ITEM_TYPE poolItem) { PoolItem_update(poolItem, 1.1f);}));
+    FloatObjectPool_update(pool, LAMBDA(void _(POOL_ITEM_PTR poolItem) { PoolItem_update(poolItem, 1.1f);}));
 
     CuAssertTrue(tc, pool->length==1);
     CuAssertTrue(tc, pool->sequence==1);
@@ -56,10 +60,10 @@ void TestFloatObjectPool_update(CuTest* tc) {
 void TestFloatObjectPool_consecutiveUpdates(CuTest* tc) {
     int capacity= 3;
 
-    BackPool* pool = FloatObjectPool_new(capacity, LAMBDA(POOL_ITEM_TYPE _(void){ return PoolItem_new(NAN);}));
+    BackPool* pool = FloatObjectPool_new(capacity, LAMBDA(POOL_ITEM_PTR _(void){ return PoolItem_new(NAN);}));
 
-    FloatObjectPool_update(pool, LAMBDA(void _(POOL_ITEM_TYPE poolItem) { PoolItem_update(poolItem, 1);}));
-    FloatObjectPool_update(pool, LAMBDA(void _(POOL_ITEM_TYPE poolItem) { PoolItem_update(poolItem, 2);}));
+    FloatObjectPool_update(pool, LAMBDA(void _(POOL_ITEM_PTR poolItem) { PoolItem_update(poolItem, 1);}));
+    FloatObjectPool_update(pool, LAMBDA(void _(POOL_ITEM_PTR poolItem) { PoolItem_update(poolItem, 2);}));
 
     CuAssertTrue(tc, pool->length==2);
     CuAssertTrue(tc, pool->sequence==2);
@@ -73,11 +77,11 @@ void TestFloatObjectPool_consecutiveUpdates(CuTest* tc) {
 void TestFloatObjectPool_rollOver(CuTest* tc) {
     int capacity= 3;
 
-    BackPool* pool = FloatObjectPool_new(capacity, LAMBDA(POOL_ITEM_TYPE _(void){ return PoolItem_new(NAN);}));
+    BackPool* pool = FloatObjectPool_new(capacity, LAMBDA(POOL_ITEM_PTR _(void){ return PoolItem_new(NAN);}));
 
-    FloatObjectPool_update(pool, LAMBDA(void _(POOL_ITEM_TYPE poolItem) { PoolItem_update(poolItem, 1);}));
-    FloatObjectPool_update(pool, LAMBDA(void _(POOL_ITEM_TYPE poolItem) { PoolItem_update(poolItem, 2);}));
-    FloatObjectPool_update(pool, LAMBDA(void _(POOL_ITEM_TYPE poolItem) { PoolItem_update(poolItem, 3);}));
+    FloatObjectPool_update(pool, LAMBDA(void _(POOL_ITEM_PTR poolItem) { PoolItem_update(poolItem, 1);}));
+    FloatObjectPool_update(pool, LAMBDA(void _(POOL_ITEM_PTR poolItem) { PoolItem_update(poolItem, 2);}));
+    FloatObjectPool_update(pool, LAMBDA(void _(POOL_ITEM_PTR poolItem) { PoolItem_update(poolItem, 3);}));
 
     CuAssertTrue(tc, pool->hasRolledOver);
     CuAssertTrue(tc, pool->length==3);
@@ -91,11 +95,11 @@ void TestFloatObjectPool_rollOver(CuTest* tc) {
 void TestFloatObjectPool_item(CuTest* tc) {
     int capacity= 3;
 
-    BackPool* pool = FloatObjectPool_new(capacity, LAMBDA(POOL_ITEM_TYPE _(void){ return PoolItem_new(NAN);}));
+    BackPool* pool = FloatObjectPool_new(capacity, LAMBDA(POOL_ITEM_PTR _(void){ return PoolItem_new(NAN);}));
 
-    FloatObjectPool_update(pool, LAMBDA(void _(POOL_ITEM_TYPE poolItem) { PoolItem_update(poolItem, 1);}));
-    FloatObjectPool_update(pool, LAMBDA(void _(POOL_ITEM_TYPE poolItem) { PoolItem_update(poolItem, 2);}));
-    FloatObjectPool_update(pool, LAMBDA(void _(POOL_ITEM_TYPE poolItem) { PoolItem_update(poolItem, 3);}));
+    FloatObjectPool_update(pool, LAMBDA(void _(POOL_ITEM_PTR poolItem) { PoolItem_update(poolItem, 1);}));
+    FloatObjectPool_update(pool, LAMBDA(void _(POOL_ITEM_PTR poolItem) { PoolItem_update(poolItem, 2);}));
+    FloatObjectPool_update(pool, LAMBDA(void _(POOL_ITEM_PTR poolItem) { PoolItem_update(poolItem, 3);}));
 
     CuAssertTrue(tc, FloatObjectPool_item(pool, 0)->value==3);
     CuAssertTrue(tc, FloatObjectPool_item(pool, 1)->value==2);
@@ -105,11 +109,11 @@ void TestFloatObjectPool_item(CuTest* tc) {
 void TestFloatObjectPool_itemPoolIndexOutOfRange(CuTest* tc) {
     int capacity= 3;
 
-    BackPool* pool = FloatObjectPool_new(capacity, LAMBDA(POOL_ITEM_TYPE _(void){ return PoolItem_new(NAN);}));
+    BackPool* pool = FloatObjectPool_new(capacity, LAMBDA(POOL_ITEM_PTR _(void){ return PoolItem_new(NAN);}));
 
-    FloatObjectPool_update(pool, LAMBDA(void _(POOL_ITEM_TYPE poolItem) { PoolItem_update(poolItem, 1);}));
-    FloatObjectPool_update(pool, LAMBDA(void _(POOL_ITEM_TYPE poolItem) { PoolItem_update(poolItem, 2);}));
-    FloatObjectPool_update(pool, LAMBDA(void _(POOL_ITEM_TYPE poolItem) { PoolItem_update(poolItem, 3);}));
+    FloatObjectPool_update(pool, LAMBDA(void _(POOL_ITEM_PTR poolItem) { PoolItem_update(poolItem, 1);}));
+    FloatObjectPool_update(pool, LAMBDA(void _(POOL_ITEM_PTR poolItem) { PoolItem_update(poolItem, 2);}));
+    FloatObjectPool_update(pool, LAMBDA(void _(POOL_ITEM_PTR poolItem) { PoolItem_update(poolItem, 3);}));
 
     CuAssertTrue(tc, FloatObjectPool_item(pool, 0)->value==3);
     CuAssertTrue(tc, FloatObjectPool_item(pool, 1)->value==2);
@@ -121,17 +125,17 @@ void TestFloatObjectPool_subscribe(CuTest* tc) {
     int capacity= 3;
     int poolItem1Index= 0;
     int poolItem2Index= 0;
-    POOL_ITEM_TYPE poolItem1[3];
-    POOL_ITEM_TYPE poolItem2[3];
+    POOL_ITEM_PTR poolItem1[3];
+    POOL_ITEM_PTR poolItem2[3];
 
-    BackPool* pool = FloatObjectPool_new(capacity, LAMBDA(POOL_ITEM_TYPE _(void){ return PoolItem_new(NAN);}));
+    BackPool* pool = FloatObjectPool_new(capacity, LAMBDA(POOL_ITEM_PTR _(void){ return PoolItem_new(NAN);}));
 
-    FloatObjectPool_subscribe(pool, LAMBDA(void _(POOL_ITEM_TYPE poolItem) { poolItem1[poolItem1Index]= poolItem; poolItem1Index++;}));
-    FloatObjectPool_subscribe(pool, LAMBDA(void _(POOL_ITEM_TYPE poolItem) { poolItem2[poolItem2Index]= poolItem; poolItem2Index++;}));
+    FloatObjectPool_subscribe(pool, LAMBDA(void _(POOL_ITEM_PTR poolItem) { poolItem1[poolItem1Index]= poolItem; poolItem1Index++;}));
+    FloatObjectPool_subscribe(pool, LAMBDA(void _(POOL_ITEM_PTR poolItem) { poolItem2[poolItem2Index]= poolItem; poolItem2Index++;}));
 
-    FloatObjectPool_update(pool, LAMBDA(void _(POOL_ITEM_TYPE poolItem) { PoolItem_update(poolItem, 1);}));
-    FloatObjectPool_update(pool, LAMBDA(void _(POOL_ITEM_TYPE poolItem) { PoolItem_update(poolItem, 2);}));
-    FloatObjectPool_update(pool, LAMBDA(void _(POOL_ITEM_TYPE poolItem) { PoolItem_update(poolItem, 3);}));
+    FloatObjectPool_update(pool, LAMBDA(void _(POOL_ITEM_PTR poolItem) { PoolItem_update(poolItem, 1);}));
+    FloatObjectPool_update(pool, LAMBDA(void _(POOL_ITEM_PTR poolItem) { PoolItem_update(poolItem, 2);}));
+    FloatObjectPool_update(pool, LAMBDA(void _(POOL_ITEM_PTR poolItem) { PoolItem_update(poolItem, 3);}));
 
     CuAssertTrue(tc, poolItem1Index == 3);
     CuAssertTrue(tc, poolItem2Index == 3);

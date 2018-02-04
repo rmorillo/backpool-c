@@ -8,7 +8,7 @@
 #endif //POOL_TYPE_NAME
 #include "poolcommon.c"
 
-BackPool* POOL_TYPE_NAME(new)(int capacity, int segmentSize, POOL_ITEM_TYPE initValue);
-void POOL_TYPE_NAME(assign)(BackPool* pool, POOL_ITEM_TYPE values);
+POOL_NAME* POOL_TYPE_NAME(new)(int capacity, int segmentSize, POOL_ITEM_PTR initValue);
+void POOL_TYPE_NAME(assign)(POOL_NAME* pool, POOL_ITEM_PTR values);
 
 #endif // SEGMENTPOOL_H_INCLUDED

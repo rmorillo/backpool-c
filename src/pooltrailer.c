@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "pooltrailer.h"
 
-PoolTrailer* PoolTrailer_new(BackPool* pool)
+PoolTrailer* POOL_TRAILER_TYPE_NAME(new)(POOL_NAME* pool)
 {
     PoolTrailer* trailer = malloc(sizeof(struct PoolTrailer));
 
@@ -14,9 +14,9 @@ PoolTrailer* PoolTrailer_new(BackPool* pool)
     return trailer;
 }
 
-POOL_ITEM_TYPE PoolTrailer_current(PoolTrailer* trailer)
+POOL_ITEM_PTR POOL_TRAILER_TYPE_NAME(current)(PoolTrailer* trailer)
 {
-    if (PoolTrailer_hasExpired(trailer, 0)) {
+    if (POOL_TRAILER_TYPE_NAME(hasExpired)(trailer, 0)) {
         printf("Trailer has expired!");
         return trailer->backPool->defaultValue;
     }
@@ -26,17 +26,17 @@ POOL_ITEM_TYPE PoolTrailer_current(PoolTrailer* trailer)
     }
 }
 
-POOL_ITEM_TYPE PoolTrailer_previous(PoolTrailer* trailer)
+POOL_ITEM_PTR POOL_TRAILER_TYPE_NAME(previous)(PoolTrailer* trailer)
 {
-    return trailer->backPool->items[PoolTrailer_getAbsoluteIndex(trailer, 1)];
+    return trailer->backPool->items[POOL_TRAILER_TYPE_NAME(getAbsoluteIndex)(trailer, 1)];
 }
 
-bool PoolTrailer_isStale(PoolTrailer* trailer)
+bool POOL_TRAILER_TYPE_NAME(isStale)(PoolTrailer* trailer)
 {
     return trailer->backPool->sequence > trailer->sequence;
 }
 
-int PoolTrailer_trailingIndex(PoolTrailer* trailer)
+int POOL_TRAILER_TYPE_NAME(trailingIndex)(PoolTrailer* trailer)
 {
        int diff = trailer->backPool->currentPosition - trailer->sequence;
        if (diff < 0){
@@ -47,7 +47,7 @@ int PoolTrailer_trailingIndex(PoolTrailer* trailer)
        }
 }
 
-int PoolTrailer_getAbsoluteIndex(PoolTrailer* trailer, int trailingIndex)
+int POOL_TRAILER_TYPE_NAME(getAbsoluteIndex)(PoolTrailer* trailer, int trailingIndex)
 {
     int targetIndex = trailer->lastPosition - (trailingIndex * trailer->backPool->offset);
     if (targetIndex < 0)
@@ -66,16 +66,16 @@ int PoolTrailer_getAbsoluteIndex(PoolTrailer* trailer, int trailingIndex)
     return targetIndex;
 }
 
-bool PoolTrailer_hasExpired(PoolTrailer* trailer, int index)
+bool POOL_TRAILER_TYPE_NAME(hasExpired)(PoolTrailer* trailer, int index)
 {
-    return ((trailer->backPool->sequence / trailer->backPool->length)>=2) || (PoolTrailer_trailingIndex(trailer) + index) > trailer->backPool->length;
+    return ((trailer->backPool->sequence / trailer->backPool->length)>=2) || (POOL_TRAILER_TYPE_NAME(trailingIndex)(trailer) + index) > trailer->backPool->length;
 }
 
-bool PoolTrailer_keepUp(PoolTrailer* trailer)
+bool POOL_TRAILER_TYPE_NAME(keepUp)(PoolTrailer* trailer)
 {
     if (trailer->sequence<trailer->backPool->sequence)
     {
-        PoolTrailer_moveForward(trailer);
+        POOL_TRAILER_TYPE_NAME(moveForward)(trailer);
         return true;
     }
     else
@@ -85,7 +85,7 @@ bool PoolTrailer_keepUp(PoolTrailer* trailer)
     }
 }
 
-void PoolTrailer_moveForward(PoolTrailer* trailer)
+void POOL_TRAILER_TYPE_NAME(moveForward)(PoolTrailer* trailer)
 {
     trailer->lastPosition = trailer->currentPosition;
     trailer->sequence++;
@@ -98,4 +98,11 @@ void PoolTrailer_moveForward(PoolTrailer* trailer)
     {
         trailer->currentPosition = 0;
     }
+}
+
+void POOL_TRAILER_TYPE_NAME(refresh)(PoolTrailer* trailer)
+{
+    trailer->sequence = trailer->backPool->sequence;
+    trailer->lastPosition = trailer->backPool->lastPosition;
+    trailer->currentPosition = trailer->backPool->currentPosition;
 }
